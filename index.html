@@ -2,8 +2,9 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>서초구한의사회</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
         /* 전체 스타일 */
         * {
@@ -18,9 +19,10 @@
             background-color: #f8f9fa;
             color: #333;
             line-height: 1.6;
+            overflow-x: hidden;
         }
         
-        /* 헤더 스타일 - 고정 */
+        /* 헤더 스타일 */
         header {
             background-color: #5a392f;
             color: white;
@@ -31,77 +33,105 @@
             width: 100%;
             top: 0;
             z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            text-align: left;
         }
         
         .logo {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: bold;
-            margin-bottom: 0.5rem;
         }
         
         .subtext {
-            font-size: 1rem;
+            font-size: 0.8rem;
             opacity: 0.8;
         }
         
-        /* 네비게이션 - 고정 */
+        /* 햄버거 메뉴 버튼 */
+        .menu-toggle {
+            display: block;
+            cursor: pointer;
+            font-size: 1.5rem;
+            z-index: 1001;
+        }
+        
+        /* 네비게이션 */
         nav {
             background-color: #70483c;
-            display: flex;
-            justify-content: center;
             position: fixed;
-            width: 100%;
-            top: 100px;
+            top: 0;
+            right: -80%;
+            width: 80%;
+            height: 100vh;
             z-index: 1000;
+            transition: right 0.3s ease;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+        
+        nav.active {
+            right: 0;
         }
         
         nav ul {
-            display: flex;
             list-style: none;
-            width: 100%;
-            max-width: 1200px;
-            justify-content: space-around;
+            padding-top: 5rem;
         }
         
         nav li {
-            padding: 1rem;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         
         nav a {
             color: white;
             text-decoration: none;
             font-weight: bold;
-            transition: color 0.3s;
+            display: block;
+            padding: 0.5rem 0;
+            font-size: 1.1rem;
         }
         
-        nav a:hover {
-            color: #ffcc99;
+        /* 메뉴 오버레이 */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
         }
         
-        /* 메인 콘텐츠 - 상단 여백 추가 */
+        .menu-overlay.active {
+            display: block;
+        }
+        
+        /* 메인 콘텐츠 */
         main {
-            max-width: 1200px;
-            margin: 160px auto 2rem;
-            padding: 0 1rem;
+            margin-top: 70px;
+            padding: 0.5rem;
         }
         
         /* 섹션 스타일 */
         .section {
             background-color: white;
             border-radius: 8px;
-            padding: 5rem 2rem;
-            margin-bottom: 2rem;
+            padding: 2rem 1rem;
+            margin-bottom: 1.5rem;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            min-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
         }
         
         .section-title {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             color: #5a392f;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             padding-bottom: 0.5rem;
             border-bottom: 2px solid #f0f0f0;
             text-align: center;
@@ -110,19 +140,16 @@
         /* 소개 섹션 */
         .intro-content {
             display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            align-items: center;
+            flex-direction: column;
+            gap: 1.5rem;
         }
         
-        .intro-text {
-            flex: 2;
-            min-width: 300px;
+        .intro-text ul {
+            margin-left: 1.5rem;
+            margin-top: 0.8rem;
         }
         
         .intro-image {
-            flex: 1;
-            min-width: 250px;
             text-align: center;
         }
         
@@ -136,92 +163,79 @@
         /* 공지사항 */
         .notice-list {
             list-style: none;
-            max-width: 800px;
-            margin: 0 auto;
         }
         
         .notice-item {
-            padding: 1.2rem;
+            padding: 1rem;
             margin-bottom: 1rem;
             border-radius: 8px;
             background-color: #f9f7f5;
-            transition: transform 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         
-        .notice-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        .notice-title {
+            font-weight: bold;
+            color: #5a392f;
+            font-size: 1.1rem;
         }
         
         .notice-date {
             color: #888;
-            font-size: 0.9rem;
-            margin-top: 0.25rem;
+            font-size: 0.8rem;
+            margin: 0.25rem 0 0.5rem;
         }
         
         /* 행사 및 교육 */
-        .events-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
         .event-card {
             background-color: #f9f7f5;
             border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            transition: transform 0.3s;
-        }
-        
-        .event-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         
         .event-title {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: bold;
             color: #5a392f;
-            margin-bottom: 0.5rem;
         }
         
         .event-date {
             color: #888;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+            margin: 0.25rem 0 0.5rem;
         }
         
         /* 자료실 */
         .resources-content {
-            max-width: 800px;
-            margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 1rem;
         }
         
         .resource-card {
             background-color: #f9f7f5;
             border-radius: 8px;
-            padding: 1.5rem;
-            transition: transform 0.3s;
+            padding: 1rem;
             text-align: center;
-        }
-        
-        .resource-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         
         .resource-icon {
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: #5a392f;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
         
         .resource-title {
             font-weight: bold;
             color: #5a392f;
+            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+        }
+        
+        .resource-card p {
+            font-size: 0.8rem;
             margin-bottom: 0.5rem;
         }
         
@@ -229,139 +243,117 @@
             color: #5a392f;
             text-decoration: none;
             display: inline-block;
-            margin-top: 0.5rem;
-        }
-        
-        .resource-link:hover {
-            text-decoration: underline;
+            margin-top: 0.3rem;
+            font-size: 0.9rem;
+            padding: 0.3rem 0.8rem;
+            background-color: rgba(90, 57, 47, 0.1);
+            border-radius: 20px;
         }
         
         /* 연락처 */
-        .contact-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .contact-info {
-            margin-bottom: 2rem;
+        .contact-content > div {
+            margin-bottom: 1.5rem;
         }
         
         .contact-info p {
             margin-bottom: 0.5rem;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
         
         /* 푸터 */
         footer {
             background-color: #333;
             color: #ddd;
-            padding: 2rem 1rem;
+            padding: 1.5rem 1rem;
             text-align: center;
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+            font-size: 0.9rem;
         }
         
         .footer-links {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 1.5rem;
+            gap: 1rem;
             margin-bottom: 1rem;
         }
         
         .footer-links a {
             color: #ddd;
             text-decoration: none;
-        }
-        
-        .footer-links a:hover {
-            text-decoration: underline;
+            font-size: 0.9rem;
         }
         
         .copyright {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             opacity: 0.7;
+            margin-top: 1rem;
         }
         
         /* 스크롤 버튼 */
         .scroll-top {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
+            bottom: 20px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
             background-color: #5a392f;
             color: white;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             text-decoration: none;
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            opacity: 0.7;
-            transition: opacity 0.3s;
+            opacity: 0.8;
         }
         
-        .scroll-top:hover {
-            opacity: 1;
-        }
-        
-        /* 반응형 디자인 */
-        @media (max-width: 768px) {
-            nav {
-                top: 80px;
-            }
-            
-            nav ul {
-                flex-wrap: wrap;
-            }
-            
-            nav li {
-                padding: 0.5rem;
-            }
-            
+        /* 태블릿 디자인 */
+        @media (min-width: 768px) {
             .logo {
-                font-size: 1.5rem;
+                font-size: 1.8rem;
+            }
+            
+            .subtext {
+                font-size: 0.9rem;
             }
             
             main {
-                margin-top: 140px;
+                margin: 70px auto 0;
+                max-width: 768px;
+                padding: 1rem;
             }
             
             .section {
-                padding: 3rem 1.5rem;
+                padding: 3rem 2rem;
             }
             
-            .intro-content {
-                flex-direction: column;
-            }
-            
-            .section-title {
-                font-size: 1.8rem;
+            .resources-content {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo">서초구한의사회</div>
-        <div class="subtext">건강한 삶을 위한 한의학의 지혜</div>
+        <div class="logo-container">
+            <div class="logo">서초구한의사회</div>
+            <div class="subtext">건강한 삶을 위한 한의학의 지혜</div>
+        </div>
+        <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
     </header>
+    
+    <div class="menu-overlay"></div>
     
     <nav>
         <ul>
-            <li><a href="#intro">소개</a></li>
-            <li><a href="#notice">공지사항</a></li>
-            <li><a href="#events">행사 및 교육</a></li>
-            <li><a href="#resources">자료실</a></li>
-            <li><a href="#contact">연락처</a></li>
+            <li><a href="#intro"><i class="fas fa-info-circle"></i> 소개</a></li>
+            <li><a href="#notice"><i class="fas fa-bullhorn"></i> 공지사항</a></li>
+            <li><a href="#events"><i class="fas fa-calendar-alt"></i> 행사 및 교육</a></li>
+            <li><a href="#resources"><i class="fas fa-folder-open"></i> 자료실</a></li>
+            <li><a href="#contact"><i class="fas fa-address-card"></i> 연락처</a></li>
         </ul>
     </nav>
     
@@ -371,14 +363,14 @@
             <div class="intro-content">
                 <div class="intro-text">
                     <p>서초구한의사회는 서울특별시 서초구에서 활동하는 한의사들의 모임으로, 한의학의 발전과 지역 주민의 건강 증진을 위해 노력하고 있습니다.</p>
-                    <p style="margin-top: 1rem;">우리는 다음과 같은 활동을 통해 한의학의 가치를 알리고 지역사회에 기여하고 있습니다:</p>
-                    <ul style="margin-left: 2rem; margin-top: 1rem;">
+                    <p style="margin-top: 0.8rem;">우리는 다음과 같은 활동을 통해 한의학의 가치를 알리고 지역사회에 기여하고 있습니다:</p>
+                    <ul>
                         <li>한의학 연구 및 학술 활동 지원</li>
                         <li>회원 한의사의 전문성 향상을 위한 교육 프로그램</li>
                         <li>지역 주민을 위한 건강 강좌 및 무료 진료 봉사</li>
                         <li>한의학 정보 제공 및 대중화 사업</li>
                     </ul>
-                    <p style="margin-top: 1rem;">서초구한의사회는 한의학의 전통적 가치와 현대적 연구를 조화롭게 발전시키며, 지역 주민들의 건강한 삶을 위해 항상 최선을 다하고 있습니다.</p>
+                    <p style="margin-top: 0.8rem;">서초구한의사회는 한의학의 전통적 가치와 현대적 연구를 조화롭게 발전시키며, 지역 주민들의 건강한 삶을 위해 항상 최선을 다하고 있습니다.</p>
                 </div>
                 <div class="intro-image">
                     <img src="/api/placeholder/400/300" alt="서초구한의사회 활동 이미지" class="placeholder-img">
@@ -504,24 +496,72 @@
         </section>
     </main>
     
-    <a href="#" class="scroll-top">↑</a>
+    <a href="#" class="scroll-top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
     
     <footer>
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="#">이용약관</a>
-                <a href="#">개인정보처리방침</a>
-                <a href="#">사이트맵</a>
-                <a href="#">관리자</a>
-            </div>
-            <div>
-                <p>서울특별시 서초구 서초대로 123 한의사회관 4층</p>
-                <p>전화: 02-123-4567 | 이메일: info@seochohan.org</p>
-            </div>
-            <div class="copyright">
-                &copy; 2025 서초구한의사회. All Rights Reserved.
-            </div>
+        <div class="footer-links">
+            <a href="#">이용약관</a>
+            <a href="#">개인정보처리방침</a>
+            <a href="#">사이트맵</a>
+            <a href="#">관리자</a>
+        </div>
+        <div>
+            <p>서울특별시 서초구 서초대로 123 한의사회관 4층</p>
+            <p>전화: 02-123-4567 | 이메일: info@seochohan.org</p>
+        </div>
+        <div class="copyright">
+            &copy; 2025 서초구한의사회. All Rights Reserved.
         </div>
     </footer>
+
+    <script>
+        // 햄버거 메뉴 토글
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('nav');
+        const menuOverlay = document.querySelector('.menu-overlay');
+        
+        menuToggle.addEventListener('click', function() {
+            nav.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+        });
+        
+        menuOverlay.addEventListener('click', function() {
+            nav.classList.remove('active');
+            menuOverlay.classList.remove('active');
+        });
+        
+        // 메뉴 아이템 클릭 시 메뉴 닫기
+        const menuItems = document.querySelectorAll('nav a');
+        menuItems.forEach(item => {
+            item.addEventListener('click', function() {
+                nav.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            });
+        });
+        
+        // 스크롤 버튼
+        const scrollBtn = document.querySelector('.scroll-top');
+        scrollBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // 스크롤 버튼 표시/숨김
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                scrollBtn.style.display = 'flex';
+            } else {
+                scrollBtn.style.display = 'none';
+            }
+        });
+        
+        // 초기에는 스크롤 버튼 숨김
+        scrollBtn.style.display = 'none';
+    </script>
 </body>
 </html>
