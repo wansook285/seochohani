@@ -206,48 +206,29 @@
             margin: 0.25rem 0 0.5rem;
         }
         
-        /* 자료실 */
-        .resources-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 1rem;
+        /* 한의사회 동정 */
+        .news-list {
+            list-style: none;
         }
         
-        .resource-card {
-            background-color: #f9f7f5;
-            border-radius: 8px;
+        .news-item {
             padding: 1rem;
-            text-align: center;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            background-color: #f9f7f5;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         
-        .resource-icon {
-            font-size: 1.8rem;
-            color: #5a392f;
-            margin-bottom: 0.5rem;
-        }
-        
-        .resource-title {
+        .news-title {
             font-weight: bold;
             color: #5a392f;
-            margin-bottom: 0.3rem;
-            font-size: 0.9rem;
+            font-size: 1.1rem;
         }
         
-        .resource-card p {
+        .news-date {
+            color: #888;
             font-size: 0.8rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .resource-link {
-            color: #5a392f;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 0.3rem;
-            font-size: 0.9rem;
-            padding: 0.3rem 0.8rem;
-            background-color: rgba(90, 57, 47, 0.1);
-            border-radius: 20px;
+            margin: 0.25rem 0 0.5rem;
         }
         
         /* 연락처 */
@@ -258,6 +239,19 @@
         .contact-info p {
             margin-bottom: 0.5rem;
             font-size: 1rem;
+        }
+        
+        /* 구분선 */
+        .divider {
+            height: 1px;
+            background-color: #ddd;
+            margin: 1.5rem 0;
+        }
+        
+        /* 강조 텍스트 */
+        .highlight {
+            font-weight: bold;
+            color: #5a392f;
         }
         
         /* 푸터 */
@@ -327,10 +321,6 @@
             .section {
                 padding: 3rem 2rem;
             }
-            
-            .resources-content {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            }
         }
     </style>
 </head>
@@ -351,8 +341,8 @@
         <ul>
             <li><a href="#intro"><i class="fas fa-info-circle"></i> 소개</a></li>
             <li><a href="#notice"><i class="fas fa-bullhorn"></i> 공지사항</a></li>
-            <li><a href="#events"><i class="fas fa-calendar-alt"></i> 행사 및 교육</a></li>
-            <li><a href="#resources"><i class="fas fa-folder-open"></i> 자료실</a></li>
+            <li><a href="#news"><i class="fas fa-newspaper"></i> 서초구 한의사회 동정</a></li>
+            <li><a href="#events"><i class="fas fa-calendar-alt"></i> 행사 및 교육 안내</a></li>
             <li><a href="#contact"><i class="fas fa-address-card"></i> 연락처</a></li>
         </ul>
     </nav>
@@ -380,103 +370,48 @@
         
         <section id="notice" class="section">
             <h2 class="section-title">공지사항</h2>
-            <ul class="notice-list">
-                <li class="notice-item">
-                    <div class="notice-title">2025년 서초구한의사회 정기총회 안내</div>
-                    <div class="notice-date">2025.04.01</div>
-                    <p>2025년도 서초구한의사회 정기총회가 4월 20일 오후 3시에 서초구청 대회의실에서 개최됩니다. 모든 회원분들의 참석을 부탁드립니다.</p>
-                </li>
-                <li class="notice-item">
-                    <div class="notice-title">봄맞이 건강 강좌 개최 안내</div>
-                    <div class="notice-date">2025.03.15</div>
-                    <p>따뜻한 봄을 맞아 지역 주민들을 위한 건강 강좌를 개최합니다. 봄철 면역력 강화와 알레르기 관리에 대한 유용한 정보를 제공할 예정입니다.</p>
-                </li>
-                <li class="notice-item">
-                    <div class="notice-title">한의학 연구 논문 발표회 참가자 모집</div>
-                    <div class="notice-date">2025.03.05</div>
-                    <p>한의학 연구 논문 발표회에 참가할 회원을 모집합니다. 최신 연구 성과를 공유하고 한의학의 발전에 기여할 수 있는 좋은 기회입니다.</p>
-                </li>
-                <li class="notice-item">
-                    <div class="notice-title">2025년 회비 납부 안내</div>
-                    <div class="notice-date">2025.02.20</div>
-                    <p>2025년도 서초구한의사회 회비 납부 기간이 시작되었습니다. 원활한 회무 운영을 위해 3월 말까지 납부해 주시기 바랍니다.</p>
-                </li>
-            </ul>
-        </section>
-        
-        <section id="events" class="section">
-            <h2 class="section-title">행사 및 교육</h2>
-            <div class="events-content">
-                <div class="event-card">
-                    <div class="event-title">봄맞이 건강 강좌</div>
-                    <div class="event-date">2025년 4월 15일, 서초문화예술회관</div>
-                    <p>봄철 건강관리와 면역력 강화를 위한 한방 건강 강좌를 개최합니다. 지역 주민 누구나 참여 가능합니다. 사전 등록시 한방 건강차와 소책자를 무료로 제공해 드립니다.</p>
-                </div>
-                
-                <div class="event-card">
-                    <div class="event-title">한의사 보수교육</div>
-                    <div class="event-date">2025년 5월 10일, 서초구청 대회의실</div>
-                    <p>최신 한의학 연구 동향과 임상 사례 발표를 통한 회원 전문성 향상 교육을 실시합니다. 참석하시는 모든 회원에게 보수교육 점수가 인정됩니다.</p>
-                </div>
-                
-                <div class="event-card">
-                    <div class="event-title">무료 한방 진료 봉사</div>
-                    <div class="event-date">2025년 6월 5일, 서초구 경로당</div>
-                    <p>지역 어르신들을 위한 무료 한방 진료 및 건강 상담 봉사활동을 진행합니다. 침, 뜸, 부항 등의 기본 치료와 한약 처방을 제공할 예정입니다.</p>
-                </div>
-                
-                <div class="event-card">
-                    <div class="event-title">여름철 건강관리 세미나</div>
-                    <div class="event-date">2025년 7월 20일, 서초구민회관</div>
-                    <p>무더운 여름을 건강하게 보내기 위한 한방 건강관리 세미나를 개최합니다. 더위 적응과 수분 관리, 식중독 예방에 관한 내용을 다룹니다.</p>
-                </div>
+            <div class="notice-item">
+                <div class="notice-title">2025 회비할인 및 분회비 인하 안내</div>
+                <div class="notice-date">2025.04.01</div>
+                <p>2025년 중앙회 회비는 50만원, 서울시 지부 회비는 30만원, 서초구 분회비도 30만원으로 책정되었습니다.</p>
+                <p>서초구는 분회 최초로 분회비를 7만원 인하하여 작년 37만원에서 2025년에는 30만원으로 책정되었습니다.</p>
+                <p>집행부의 노력과 서초구 회원분들의 높은 수납률 덕분입니다.</p>
+                <p>4월 한달간 협회 홈페이지에서 온라인 가상계좌 결제시</p>
+                <p>중앙회비는 12% 할인으로 6만원 할인된 44만원</p>
+                <p>서울시 지부 회비는 10%할인으로 3만원 할인된 27만원에 납부 할 수 있습니다.</p>
+                <p>여기에 서초구 분회비 30만원까지 하면 총 101만원을 납부하시면 됩니다.</p>
             </div>
         </section>
         
-        <section id="resources" class="section">
-            <h2 class="section-title">자료실</h2>
-            <div class="resources-content">
-                <div class="resource-card">
-                    <div class="resource-icon">📚</div>
-                    <div class="resource-title">한의학 학술자료 모음</div>
-                    <p>최신 한의학 연구 논문과 학술 자료를 모아놓은 자료실입니다.</p>
-                    <a href="#" class="resource-link">자료 보기</a>
-                </div>
-                
-                <div class="resource-card">
-                    <div class="resource-icon">🌿</div>
-                    <div class="resource-title">한방 건강관리 가이드</div>
-                    <p>일상에서 실천할 수 있는 한방 건강관리 방법을 소개합니다.</p>
-                    <a href="#" class="resource-link">자료 보기</a>
-                </div>
-                
-                <div class="resource-card">
-                    <div class="resource-icon">🍵</div>
-                    <div class="resource-title">계절별 한방 건강식품</div>
-                    <p>계절에 맞는 한방 건강식품과 차 레시피를 제공합니다.</p>
-                    <a href="#" class="resource-link">자료 보기</a>
-                </div>
-                
-                <div class="resource-card">
-                    <div class="resource-icon">📋</div>
-                    <div class="resource-title">회의록 및 발표자료</div>
-                    <p>한의사회 회의록과 학술 발표 자료를 확인할 수 있습니다.</p>
-                    <a href="#" class="resource-link">자료 보기</a>
-                </div>
-                
-                <div class="resource-card">
-                    <div class="resource-icon">⚖️</div>
-                    <div class="resource-title">의료법규 및 정책</div>
-                    <p>한의사 관련 의료법규와 정책 자료를 제공합니다.</p>
-                    <a href="#" class="resource-link">자료 보기</a>
-                </div>
-                
-                <div class="resource-card">
-                    <div class="resource-icon">🔍</div>
-                    <div class="resource-title">한의학 용어 사전</div>
-                    <p>한의학 전문 용어에 대한 쉬운 설명을 제공합니다.</p>
-                    <a href="#" class="resource-link">자료 보기</a>
-                </div>
+        <section id="news" class="section">
+            <h2 class="section-title">서초구 한의사회 동정</h2>
+            <div class="news-item">
+                <div class="news-title">21대 서초구 한의사회 첫 이사회 실시</div>
+                <div class="news-date">2025.04.01</div>
+                <p>4월 1일 21대 서초구 한의사회의 첫 이사회가 개최되었습니다.</p>
+            </div>
+        </section>
+        
+        <section id="events" class="section">
+            <h2 class="section-title">행사 및 교육 안내</h2>
+            <div class="event-card">
+                <div class="event-title">봉침쇼크 및 쇼크 발생 시 대처법</div>
+                <div class="event-date">2025년 4월 12일 (토) 오후 5시, 강남코지모임 2호 2층 30인실</div>
+                <p><strong>서초구한의사회 정상화 일환으로 학술대회를 개최합니다.</strong></p>
+                <p>관내에서 봉침 사고가 있었던 적도 있었어서 분회 원장님들이 안전하게 봉침 사용하시라는 차원에서 강의를 기획하였습니다.</p>
+                <p>모든 한의사 사전 등록자 무료 개방(현장등록1만원)이나 노쇼가 많을 경우 다시는 이런 강의 개최할수 없음을 알려드리며 꼭 수강하실 분들만 해주시기 바랍니다.</p>
+                <p>앞으로 서초구는 회원분들에게 도움이 되게 한의학의 우수성을 알리는 홍보와 한의원에 실질적 도움을 주는 사업을 주최하겠습니다.</p>
+                <div class="divider"></div>
+                <p class="highlight">- 서초구 한의사회 회장 김민기 -</p>
+                <div class="divider"></div>
+                <p><strong>주제: </strong>봉침쇼크 및 쇼크 발생 시 대처법</p>
+                <p><strong>일시: </strong>2025년 4월 12일 토요일 오후 5시</p>
+                <p><strong>장소: </strong>강남코지모임 2호 2층 30인실</p>
+                <p><strong>등록비: </strong></p>
+                <ul style="margin-left: 1rem;">
+                    <li>사전등록: 무료</li>
+                    <li>현장등록: 10,000원</li>
+                </ul>
             </div>
         </section>
         
